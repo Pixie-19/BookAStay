@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 const MONGO_URL= "mongodb://127.0.0.1:27017/BookAStay";
 main()
@@ -63,10 +64,18 @@ app.get("/listings/:id/edit", async (req,res) => {
     res.render("listings/edit.ejs" , { listing });
 });
 
-//Update
+//Update Route
 app.put("/listings/:id", async (req,res) => {
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    res.redirect("/listings");
+});
+
+//Delete Route
+app.delete("/listings/:id", async (req,res) => {
+    let {id} = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
     res.redirect("/listings");
 });
 
