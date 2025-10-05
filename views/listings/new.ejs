@@ -8,19 +8,37 @@
 <body>
     <h3>Create a New Listing</h3>
     <form method="POST" action="/listings">
-        <input name="listing[title]" placeholder="Enter Title" type="text">
+        <div>
+        <label for="title" class="form-label">Title</label>
+        <input name="listing[title]" placeholder="Enter Title" type="text" class="form-control">
+        </div>
+        
+        <div>
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control"></textarea>
+        </div>
+        <div>
+            <label for="image" class="form-label">Image Link</label>
+            <input name="listing[image]" placeholder="enter image URL/Link" type="text" class="form-control">
+        </div>
+        
+        <div>
+            <label for="price" class="form-label">Price</label>
+            <input name="listing[price]" placeholder="Enter Price" type="number" class="form-control">
+        </div>
+        
+        <div>
+            <label for="country" class="form-label">Country</label>
+            <input name="listing[country]" placeholder="Enter Country" type="text" class="form-control">
+        </div>
+        
+        <div>
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" placeholder="Enter Location" type="text" class="form-control">
+        </div>
+        
         <br/><br/>
-        <textarea name="listing[description]" placeholder="Enter Description" ></textarea>
-        <br/><br/>
-        <input name="listing[image]" placeholder="enter image URL/Link" type="text">
-        <br/><br/>
-        <input name="listing[price]" placeholder="Enter Price" type="number">
-        <br/><br/>
-        <input name="listing[country]" placeholder="Enter Country" type="text">
-        <br/><br/>
-        <input name="listing[location]" placeholder="Enter Location" type="text">
-        <br/><br/>
-        <button>Add</button>
+        <button class="btn btn-dark">Add</button>
     </form>
 </body>
 </html>
