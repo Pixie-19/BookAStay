@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookAStay</title>
-</head>
-<body>
-    <h3>Listing Details : </h3>
+
+<% layout('layouts/boilerplate') %>
+<h3>Listing Details : </h3>
+<div class="card">
+    <img src="<%= listing.image %>" class="card-img-top" alt="listing_image">
+    <div class="card-body">
+        <p class="card-text"><%= listing.image %></p> <!-- fixed here -->
+    </div>
+</div>
+    
     <ul>
         <li><%= listing.title %></li>
         <li><%= listing.description %></li>
@@ -20,5 +21,3 @@
     <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
         <button>Delete this listing</button>
     </form>
-</body>
-</html>
