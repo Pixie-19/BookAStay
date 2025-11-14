@@ -5,6 +5,8 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 const MONGO_URL= "mongodb://127.0.0.1:27017/BookAStay";
 main()
@@ -58,15 +60,11 @@ app.get("/listings/:id", async (req,res) => {
 //    await newListing.save();
 //    res.redirect("/listings");
 //});
-app.post("/listings", async (req, res) => {
-  try {
+app.post("/listings", wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body); // ✅ FIXED
     await newListing.save();
     res.redirect("/listings");
-  } catch(err) {
-    next(err);
-  }
-});
+}));
 
 //Edit Route
 app.get("/listings/:id/edit", async (req,res) => {
