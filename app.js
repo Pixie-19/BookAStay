@@ -65,6 +65,15 @@ app.post("/listings", wrapAsync(async (req, res) => {
         throw new ExpressError(400,"Send Valid Data For Listing");
     }
     const newListing = new Listing(req.body); // ✅ FIXED
+    if(newListing.title) {
+        throw new ExpressError(400,"Title is missing!");
+    }
+    if(newListing.description) {
+        throw new ExpressError(400,"Description is missing!");
+    }
+    if(newListing.location) {
+        throw new ExpressError(400,"Location is missing!");
+    }
     await newListing.save();
     res.redirect("/listings");
 }));
@@ -118,7 +127,8 @@ app.all(/.*/, (req, res, next) => {
 
 app.use((err, req, res, next) => {
     let {statusCode=500, message="Something went wrong!"} = err;
-    res.status(statusCode).send(message);
+    res.status(statusCode).render("error.ejs",{message});
+    //res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
