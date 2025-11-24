@@ -32,6 +32,17 @@ app.get("/", (req,res) => {
     res.send("hi, i am root");
 });
 
+const validateListing  = (req,res,next) => {
+    let {error} = listingSchema.validate(req.body);
+    
+    if(error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+}
+
 app.get("/listings", wrapAsync(async (req,res) => {
     try {
         const allListings = await Listing.find({});
@@ -61,12 +72,8 @@ app.get("/listings/:id", wrapAsync(async (req,res) => {
 //    await newListing.save();
 //    res.redirect("/listings");
 //});
-app.post("/listings", wrapAsync(async (req, res) => {
-    let result = listingSchema.validate(req.body);
-    console.log(result);
-    if(result.error) {
-        throw new ExpressError(400, result.error);
-    }
+app.post("/listings",validateListing,
+    wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body); // ✅ FIXED
     
     await newListing.save();
@@ -86,13 +93,12 @@ app.get("/listings/:id/edit", wrapAsync(async (req,res) => {
 //    await Listing.findByIdAndUpdate(id, {...req.body.listing});
 //    res.redirect("/listings");
 //});
-app.put("/listings/:id", wrapAsync(async (req, res) => {
-    if(!req.body.listing) {
-        throw new ExpressError(400,"Send Valid Data For Listing");
-    }
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, req.body); // ✅ FIXED
-    res.redirect("/listings");
+app.put("/listings/:id",
+    validateListing,
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        await Listing.findByIdAndUpdate(id, req.body); // ✅ FIXED
+        res.redirect("/listings");
 }));
 
 //Delete Route
