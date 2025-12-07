@@ -112,18 +112,20 @@ app.delete("/listings/:id", wrapAsync(async (req,res) => {
 
 //Reviews
 //Post Route
-app.post("/listings/:id/reviews", async(req,res) => {
+app.post("/listings/:id/reviews", async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
-
+    
     listing.reviews.push(newReview);
 
     await newReview.save();
     await listing.save();
 
-    console.log("new review saved");
-    res.send("new review saved");
+    console.log("New review saved");
+    res.send("New review saved");
 });
+
+
 
 //    app.get("/testListing" , async (req,res) => {
 //      let sampleListing = new Listing ({
