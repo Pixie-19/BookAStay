@@ -7,8 +7,8 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Classroom Server!');
 });
 
-app.use('/', users);
-app.use('/', posts);
+app.use('/users', users);
+app.use('/posts', posts);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
